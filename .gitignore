@@ -1,0 +1,25 @@
+# Python / uv
+__pycache__/
+*.py[cod]
+.venv/
+.pytest_cache/
+.ruff_cache/
+dist/
+build/
+*.egg-info/
+
+# Generated data, renders, checkpoints, and outputs
+artifacts/
+data/generated/
+outputs/
+checkpoints/
+*.png
+*.jpg
+*.jpeg
+*.webp
+!docs/assets/*.png
+
+# OS / Editor
+.DS_Store
+.env
+.env.local
