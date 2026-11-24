@@ -1,0 +1,72 @@
+{
+  "model_id": "Qwen/Qwen3-VL-8B-Instruct",
+  "adapter_id": null,
+  "split": "test",
+  "num_samples": 22,
+  "mean_cer": 0.3114,
+  "mean_similarity": 0.7399,
+  "mean_latex_f1": 0.5459,
+  "mean_latex_valid_rate": 1.0,
+  "mean_structure_f1": 0.8467,
+  "mean_latency_ms": 9233.5095,
+  "by_subject": {
+    "fisika": {
+      "count": 6.0,
+      "cer": 0.2677,
+      "similarity": 0.7659,
+      "latex_f1": 0.4385,
+      "latex_valid_rate": 1.0,
+      "structure_f1": 0.9037
+    },
+    "kimia": {
+      "count": 4.0,
+      "cer": 0.2497,
+      "similarity": 0.7697,
+      "latex_f1": 0.4095,
+      "latex_valid_rate": 1.0,
+      "structure_f1": 0.9546
+    },
+    "matematika": {
+      "count": 12.0,
+      "cer": 0.3538,
+      "similarity": 0.717,
+      "latex_f1": 0.645,
+      "latex_valid_rate": 1.0,
+      "structure_f1": 0.7823
+    }
+  },
+  "by_augmentation": {
+    "clean": {
+      "count": 5.0,
+      "cer": 0.4087,
+      "similarity": 0.6696,
+      "latex_f1": 0.4609,
+      "latex_valid_rate": 1.0,
+      "structure_f1": 0.9119
+    },
+    "low_dpi": {
+      "count": 6.0,
+      "cer": 0.2316,
+      "similarity": 0.7968,
+      "latex_f1": 0.6589,
+      "latex_valid_rate": 1.0,
+      "structure_f1": 1.0
+    },
+    "mobile_photo": {
+      "count": 6.0,
+      "cer": 0.2924,
+      "similarity": 0.7518,
+      "latex_f1": 0.5714,
+      "latex_valid_rate": 1.0,
+      "structure_f1": 0.7212
+    },
+    "scanned_pdf": {
+      "count": 5.0,
+      "cer": 0.3327,
+      "similarity": 0.7277,
+      "latex_f1": 0.4646,
+      "latex_valid_rate": 1.0,
+      "structure_f1": 0.7483
+    }
+  }
+}

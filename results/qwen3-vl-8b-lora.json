@@ -1,0 +1,72 @@
+{
+  "model_id": "Qwen/Qwen3-VL-8B-Instruct",
+  "adapter_id": "/content/pindai/checkpoints/pindai-qwen3-vl-8b-lora",
+  "split": "test",
+  "num_samples": 22,
+  "mean_cer": 0.0667,
+  "mean_similarity": 0.9352,
+  "mean_latex_f1": 0.6683,
+  "mean_latex_valid_rate": 1.0,
+  "mean_structure_f1": 1.0,
+  "mean_latency_ms": 16614.7895,
+  "by_subject": {
+    "fisika": {
+      "count": 6.0,
+      "cer": 0.0878,
+      "similarity": 0.9174,
+      "latex_f1": 0.3894,
+      "latex_valid_rate": 1.0,
+      "structure_f1": 1.0
+    },
+    "kimia": {
+      "count": 4.0,
+      "cer": 0.0868,
+      "similarity": 0.9146,
+      "latex_f1": 0.5972,
+      "latex_valid_rate": 1.0,
+      "structure_f1": 1.0
+    },
+    "matematika": {
+      "count": 12.0,
+      "cer": 0.0495,
+      "similarity": 0.9509,
+      "latex_f1": 0.8315,
+      "latex_valid_rate": 1.0,
+      "structure_f1": 1.0
+    }
+  },
+  "by_augmentation": {
+    "clean": {
+      "count": 5.0,
+      "cer": 0.0659,
+      "similarity": 0.9369,
+      "latex_f1": 0.6881,
+      "latex_valid_rate": 1.0,
+      "structure_f1": 1.0
+    },
+    "low_dpi": {
+      "count": 6.0,
+      "cer": 0.061,
+      "similarity": 0.9394,
+      "latex_f1": 0.6342,
+      "latex_valid_rate": 1.0,
+      "structure_f1": 1.0
+    },
+    "mobile_photo": {
+      "count": 6.0,
+      "cer": 0.0601,
+      "similarity": 0.9418,
+      "latex_f1": 0.7074,
+      "latex_valid_rate": 1.0,
+      "structure_f1": 1.0
+    },
+    "scanned_pdf": {
+      "count": 5.0,
+      "cer": 0.0824,
+      "similarity": 0.9203,
+      "latex_f1": 0.6425,
+      "latex_valid_rate": 1.0,
+      "structure_f1": 1.0
+    }
+  }
+}

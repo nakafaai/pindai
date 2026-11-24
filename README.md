@@ -79,9 +79,43 @@ Pindai avoids subjective "vibe checks" by scoring every prediction against five 
 
 ---
 
-## Benchmark Results (IndoSTEM-OCR v0.1)
+## Sample Rendered Sheets (`IndoSTEM-OCR`)
 
-*Baseline & LoRA runs in progress on Colab GPU. Run `uv run pindai leaderboard outputs/` to regenerate this table from saved `report.json` files.*
+Pindai renders SymPy-verified Indonesian STEM problems via KaTeX across four layout templates and four degradation profiles (`clean`, `scanned_pdf`, `mobile_photo`, `low_dpi`):
+
+| Clean Exam Sheet | Mobile Camera Photo | Scanned Table + Formula |
+| :---: | :---: | :---: |
+| ![Clean Math](docs/assets/sample-clean-math.png) | ![Mobile Photo](docs/assets/sample-mobile-photo.png) | ![Scanned Table](docs/assets/sample-table-scan.png) |
+
+---
+
+## Benchmark Results (`IndoSTEM-OCR` v0.1, Colab A100 40GB)
+
+Evaluated on the held-out `test` split (`n = 22`, seed `42`, balanced across `matematika`, `fisika`, `kimia` and all four degradation profiles). Saved reports live in [`results/`](results/).
+
+| Model | Mode | CER (↓) | Similarity (↑) | LaTeX F1 (↑) | LaTeX Valid (↑) | Structure F1 (↑) |
+| --- | --- | ---: | ---: | ---: | ---: | ---: |
+| `Qwen/Qwen3-VL-4B-Instruct` | zero-shot | `0.3943` | `0.6718` | `0.4807` | `1.0000` | `0.8210` |
+| `Qwen/Qwen3-VL-8B-Instruct` (4-bit) | zero-shot | `0.3114` | `0.7399` | `0.5459` | `1.0000` | `0.8467` |
+| **`Qwen/Qwen3-VL-8B-Instruct` (4-bit)** | **`pindai-lora` (2 ep, 176 train)** | **`0.0667`** | **`0.9352`** | **`0.6683`** | **`1.0000`** | **`1.0000`** |
+
+### Breakdown by Subject (`Qwen3-VL-8B` Zero-Shot vs `pindai-lora`)
+
+| Subject | Zero-Shot CER | LoRA CER | Zero-Shot LaTeX F1 | LoRA LaTeX F1 | LoRA Structure F1 |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| **Matematika** | `0.3538` | **`0.0495`** | `0.6450` | **`0.8315`** | **`1.0000`** |
+| **Kimia** | `0.2497` | **`0.0868`** | `0.4095` | **`0.5972`** | **`1.0000`** |
+| **Fisika** | `0.2677` | **`0.0878`** | `0.4385` | `0.3894` | **`1.0000`** |
+
+**Key Takeaways:**
+- Just **2 epochs of QLoRA on 176 synthetic samples** cut overall CER by **78.6%** (`0.3114` -> `0.0667`), lifted normalized similarity to **93.52%**, raised Mathematics LaTeX F1 to **0.8315**, and achieved **100% Structure F1** across all subjects and scan/photo degradations (including `mobile_photo` CER `0.0601`).
+- **Open opportunity (Physics units):** Physics CER dropped sharply (`0.2677` -> `0.0878`), while strict LaTeX F1 stayed lower due to equivalent unit notation variants (e.g. `\text{ m/s}` vs `\mathrm{m/s}` or plain units outside `$...$`). Expanding unit canonicalization and training scale (`1,000+` samples) is the next milestone.
+
+Regenerate this table locally from any `report.json` folder:
+
+```bash
+uv run pindai leaderboard results/
+```
 
 ---
 
