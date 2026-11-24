@@ -35,35 +35,33 @@ def main() -> None:
         run(["git", "clone", "--depth", "1", args.repo, str(workdir)])
 
     run([sys.executable, "-m", "pip", "install", "-q", "uv"])
-    run(["uv", "sync", "--project", str(workdir), "--extra", "render", "--extra", "ml"])
-    run(["uv", "run", "--project", str(workdir), "playwright", "install", "chromium"])
-    run(["uv", "run", "--project", str(workdir), "playwright", "install-deps", "chromium"])
-
-    data_dir = workdir / "data" / "generated"
     run(
         [
             "uv",
-            "run",
-            "--project",
+            "pip",
+            "install",
+            "--system",
+            "-q",
+            "-e",
             str(workdir),
-            "pindai",
-            "generate",
-            "--count",
-            str(args.count),
-            "--render",
-            "-o",
-            str(data_dir),
+            "playwright",
+            "peft",
+            "bitsandbytes",
+            "qwen-vl-utils",
+            "accelerate",
+            "transformers>=4.51.0",
         ]
     )
+    run(["playwright", "install", "chromium"])
+    run(["playwright", "install-deps", "chromium"])
+
+    data_dir = workdir / "data" / "generated"
+    run(["pindai", "generate", "--count", str(args.count), "--render", "-o", str(data_dir)])
 
     out_root = workdir / "outputs" / "benchmark"
     for model_id in args.models:
         slug = model_id.replace("/", "__")
         cmd = [
-            "uv",
-            "run",
-            "--project",
-            str(workdir),
             "pindai",
             "eval",
             "--dataset",
@@ -83,7 +81,7 @@ def main() -> None:
             cmd.append("--4bit")
         run(cmd)
 
-    run(["uv", "run", "--project", str(workdir), "pindai", "leaderboard", str(out_root)])
+    run(["pindai", "leaderboard", str(out_root)])
 
 
 if __name__ == "__main__":

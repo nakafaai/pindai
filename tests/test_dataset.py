@@ -1,6 +1,7 @@
 """Tests for deterministic Indonesian STEM dataset generation."""
 
-from pindai.dataset.schema import Split, Subject
+from pindai.dataset.renderer import build_sample_html
+from pindai.dataset.schema import FormatKind, Split, Subject
 from pindai.dataset.templates import GENERATOR_REGISTRY, generate_dataset
 from pindai.eval.metrics import extract_latex_blocks, is_valid_latex
 
@@ -26,3 +27,13 @@ def test_all_generated_latex_is_structurally_valid() -> None:
         assert blocks, f"Expected LaTeX blocks in {sample.template_id}"
         for block in blocks:
             assert is_valid_latex(block), f"Invalid LaTeX in {sample.template_id}: {block}"
+
+
+def test_renderer_html_includes_body_and_tables_without_external_markdown_js() -> None:
+    samples = generate_dataset(count=len(GENERATOR_REGISTRY), seed=42)
+    for sample in samples:
+        page_html = build_sample_html(sample)
+        assert "<h3>" in page_html
+        assert "marked.min.js" not in page_html
+        if sample.format_kind == FormatKind.TABLE_PROBLEM:
+            assert "<table>" in page_html
